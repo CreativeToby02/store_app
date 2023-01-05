@@ -18,12 +18,12 @@ class _BottomBarState extends State<BottomBar> {
     });
   }
 
-  List<Widget> screens = const [
-    HomePage(),
-    ProductDescription(),
-    HomePage(),
-    ProductDescription(),
-  ];
+  // List<Widget> screens = const [
+  //   HomePage(),
+  //   ProductDescription(),
+  //   HomePage(),
+  //   ProductDescription(),
+  // ];
 
   @override
   Widget build(BuildContext context) {

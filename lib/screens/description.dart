@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:store_app/screens/chat.dart';
 
 class ProductDescription extends StatefulWidget {
   const ProductDescription({super.key});
@@ -312,7 +313,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                               width: 120,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: Colors.black),
+                                  color: Color(0xFF2C2C2C)),
                               child: const Text(
                                 'Buy now',
                                 style: TextStyle(
@@ -328,13 +329,22 @@ class _ProductDescriptionState extends State<ProductDescription> {
                             width: 10,
                           ),
                           GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) =>
+                                            const ChatScreen())));
+                              });
+                            },
                             child: Container(
                               alignment: const Alignment(0, 0),
                               height: 65,
                               width: 230,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: Color.fromARGB(255, 215, 248, 25)),
+                                  color: Color(0xFFD9FB70)),
                               child: const Text(
                                 'Chat with the seller',
                                 style: TextStyle(
