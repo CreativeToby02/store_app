@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 
 class MyMessageField extends StatelessWidget {
-  const MyMessageField({Key? key, this.onPressed}) : super(key: key);
+  const MyMessageField(
+      {Key? key, this.onPressed, this.onChanged, this.controller})
+      : super(key: key);
 
   final Function()? onPressed;
+  final Function(String)? onChanged;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
+      onChanged: onChanged,
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:store_app/screens/chat.dart';
 
 class ProductDescription extends StatefulWidget {
+  static const String id = 'ProductDescription';
   const ProductDescription({super.key});
 
   @override
@@ -36,7 +37,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                 //   options: CarouselOptions(height: 100),
                 // ),
                 Container(
-                  height: 420,
+                  height: 400,
                   width: double.infinity,
                   decoration: const BoxDecoration(
                       image: DecorationImage(
@@ -91,8 +92,9 @@ class _ProductDescriptionState extends State<ProductDescription> {
             child: Container(
               width: MediaQuery.of(context).size.width,
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(15),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -301,62 +303,60 @@ class _ProductDescriptionState extends State<ProductDescription> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 25),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            child: Container(
-                              alignment: const Alignment(0, 0),
-                              height: 65,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Color(0xFF2C2C2C)),
-                              child: const Text(
-                                'Buy now',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  letterSpacing: 0.5,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 25),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              child: Container(
+                                alignment: const Alignment(0, 0),
+                                height: 65,
+                                width: 120,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Color(0xFF2C2C2C)),
+                                child: const Text(
+                                  'Buy now',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    letterSpacing: 0.5,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: ((context) =>
-                                            const ChatScreen())));
-                              });
-                            },
-                            child: Container(
-                              alignment: const Alignment(0, 0),
-                              height: 65,
-                              width: 230,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Color(0xFFD9FB70)),
-                              child: const Text(
-                                'Chat with the seller',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  letterSpacing: 0.5,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  Navigator.pushNamed(context, ChatScreen.id);
+                                });
+                              },
+                              child: Container(
+                                alignment: const Alignment(0, 0),
+                                height: 65,
+                                width: 200,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Color(0xFFD9FB70)),
+                                child: const Text(
+                                  'Chat with the seller',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    letterSpacing: 0.5,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],

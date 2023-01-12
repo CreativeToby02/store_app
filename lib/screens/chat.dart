@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:store_app/screens/registration.dart';
-
+import '../components/messagebox.dart';
 import '../components/messagefield.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ChatScreen extends StatefulWidget {
+  static const String id = 'ChatScreen';
   const ChatScreen({super.key});
 
   @override
@@ -11,6 +13,30 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final messageTextController = TextEditingController();
+  final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  late User loggedInUser;
+  late String messageText;
+
+  @override
+  void initState() {
+    super.initState();
+
+    getCurrentUser();
+  }
+
+  void getCurrentUser() {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +102,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       ],
                     ),
                     GestureDetector(
-                      onTap: null,
+                      onTap: () {},
                       child: Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
@@ -97,17 +123,59 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: _firestore.collection("messages").snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.black54,
+                    ),
+                  );
+                }
+                if (snapshot.hasError) {
+                  return const Text('Something went wrong');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text("Loading");
+                }
+                final messages = snapshot.data!.docs.reversed;
+                List<MessageBox> messageWidgets = [];
+                for (var message in messages) {
+                  final messageText = message.get("text");
+                  final messageSender = message.get("sender");
+
+                  final currentUser = loggedInUser.email;
+                  final messageWidget = MessageBox(
+                    sender: messageSender,
+                    text: messageText,
+                    isMe: currentUser == messageSender,
+                  );
+                  messageWidgets.add(messageWidget);
+                }
+                return ListView(
+                  reverse: true,
+                  children: messageWidgets,
+                );
+              },
+            ),
+          ),
           Padding(
             padding:
                 const EdgeInsets.only(left: 10, right: 10, bottom: 20, top: 10),
             child: MyMessageField(
+              controller: messageTextController,
               onPressed: () {
-                setState(() {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => const RegistrationScreen())));
+                _firestore.collection('messages').add({
+                  'text': messageText,
+                  'sender': loggedInUser.email,
                 });
+                messageTextController.clear();
+              },
+              onChanged: (value) {
+                messageText = value;
               },
             ),
           ),
