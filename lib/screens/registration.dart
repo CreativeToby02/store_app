@@ -120,7 +120,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         child: const Text(
                           'Sign up',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black54,
                             letterSpacing: 0.5,
                             fontSize: 20,
                             fontWeight: FontWeight.w400,

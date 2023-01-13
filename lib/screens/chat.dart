@@ -141,7 +141,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Text("Loading");
                 }
-                final messages = snapshot.data!.docs.reversed;
+                final messages = snapshot.data!.docs;
                 List<MessageBox> messageWidgets = [];
                 for (var message in messages) {
                   final messageText = message.get("text");
